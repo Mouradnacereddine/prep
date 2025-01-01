@@ -1,0 +1,6 @@
+.wide-column {
+    min-width: 200px;  /* Largeur minimale */
+    max-width: 300px;  /* Largeur maximale */
+    white-space: normal;  /* Permet le retour à la ligne */
+    word-wrap: break-word;  /* Coupe les mots longs */
+}

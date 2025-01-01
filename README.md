@@ -34,6 +34,13 @@ pip install -r requirements/local.txt
 
 python manage.py migrate
 python manage.py runserver
+
+# Créer un superutilisateur (admin)
+python manage.py createsuperuser
+# Suivez les instructions pour créer votre compte admin :
+# 1. Entrez une adresse email
+# 2. Entrez un mot de passe sécurisé
+# 3. Confirmez le mot de passe
 ```
 
 ### Frontend (Next.js)

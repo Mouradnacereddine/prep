@@ -151,6 +151,20 @@ class Stock(DjangoModel):
         verbose_name_plural = _('Stocks')
         unique_together = ['nom', 'type_stock', 'emplacement']
 
+class UniteMesure(DjangoModel):
+    """Model representing a measurement unit."""
+    nom = models.CharField(max_length=20, unique=True)
+    symbole = models.CharField(max_length=10, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.nom} ({self.symbole})"
+
+    class Meta(DjangoModel.Meta):
+        ordering = ['nom']
+        verbose_name = _('Unité de mesure')
+        verbose_name_plural = _('Unités de mesure')
+
 class Article(DjangoModel):
     """Model representing an article."""
     code_article = models.CharField(max_length=100)
@@ -185,7 +199,12 @@ class Article(DjangoModel):
         on_delete=models.CASCADE,
         related_name='articles'
     )
-    unite_mesure = models.CharField(max_length=20)
+    unite_mesure = models.ForeignKey(
+        UniteMesure,
+        on_delete=models.PROTECT,
+        related_name='articles',
+        verbose_name=_('Unité de mesure')
+    )
     quantite_initiale = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -231,7 +250,7 @@ class Article(DjangoModel):
             
         return (
             f"{self.code_article} - {description_short} | "
-            f"Stock: {self.quantite_stock} {self.unite_mesure} | "
+            f"Stock: {self.quantite_stock} {self.unite_mesure.nom} | "
             f"Emplacement: {stock_obj.nom} ({stock_obj.emplacement}) | "
             f"Catégorie: {categorie_obj.nom}"
         )
@@ -717,7 +736,7 @@ class LigneMouvement(models.Model):
             raise ValidationError(_('L\'article spécifié n\'existe pas.'))
 
     def __str__(self) -> str:
-        return f"{self.article.code_article} - {self.quantite} {self.article.unite_mesure}"
+        return f"{self.article.code_article} - {self.quantite} {self.article.unite_mesure.nom}"
 
     class Meta:
         verbose_name = _('Ligne de mouvement')

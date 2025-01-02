@@ -225,7 +225,6 @@ class ArticleForm(forms.ModelForm):
             'code_article': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Entrez le code article'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Description détaillée de l\'article'}),
             'specification': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Spécifications techniques'}),
-            'unite_mesure': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: kg, unité, mètre...'}),
             'quantite_initiale': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
             'quantite_stock': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
             'seuil_alerte': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),

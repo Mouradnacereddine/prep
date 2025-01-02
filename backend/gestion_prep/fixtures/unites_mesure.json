@@ -1,0 +1,58 @@
+[
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Kilogramme",
+            "symbole": "kg",
+            "description": "Unité de masse"
+        }
+    },
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Gramme",
+            "symbole": "g",
+            "description": "Unité de masse"
+        }
+    },
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Litre",
+            "symbole": "L",
+            "description": "Unité de volume"
+        }
+    },
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Millilitre",
+            "symbole": "mL",
+            "description": "Unité de volume"
+        }
+    },
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Pièce",
+            "symbole": "pc",
+            "description": "Unité de comptage"
+        }
+    },
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Mètre",
+            "symbole": "m",
+            "description": "Unité de longueur"
+        }
+    },
+    {
+        "model": "gestion_prep.unitemesure",
+        "fields": {
+            "nom": "Centimètre",
+            "symbole": "cm",
+            "description": "Unité de longueur"
+        }
+    }
+]

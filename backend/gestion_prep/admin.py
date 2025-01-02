@@ -19,7 +19,7 @@ from .models import (
     Site, Train, Unite, Equipement, Stock, Article,
     Phase, TypePlatinage, MouvementMateriel, Document,
     Platinage, HistoriqueMouvement, LigneMouvement,
-    CategorieArticle
+    CategorieArticle, UniteMesure
 )
 from .forms import (
     MouvementMaterielForm, DocumentForm, ArticleForm,
@@ -702,7 +702,7 @@ class ArticleAdmin(CustomModelAdmin):
     )
     search_fields = ['code_article', 'description', 'specification']
     ordering = ['code_article']
-    autocomplete_fields = ['stock', 'categorie_article']
+    autocomplete_fields = ['stock', 'categorie_article', 'unite_mesure']
     inlines = [DocumentInline]
 
     def get_search_results(self, request: AuthenticatedHttpRequest, queryset, search_term):
@@ -753,6 +753,11 @@ class ArticleAdmin(CustomModelAdmin):
 
         formset.save_m2m()
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "unite_mesure":
+            kwargs["queryset"] = UniteMesure.objects.all()
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 @admin.register(Site)
 class SiteAdmin(CustomModelAdmin):
     list_display = ('nom', 'description', 'get_unites_count')
@@ -766,3 +771,14 @@ class SiteAdmin(CustomModelAdmin):
             return format_html('<span style="color: red;">0</span>')
         url = f"{reverse('admin:gestion_prep_unite_changelist')}?site__id__exact={obj.pk}"
         return format_html('<a href="{}">{}</a>', url, count)
+
+@admin.register(UniteMesure)
+class UniteMesureAdmin(CustomModelAdmin):
+    list_display = ('nom', 'symbole', 'description')
+    search_fields = ('nom', 'symbole', 'description')
+    ordering = ['nom']
+    search_help_text = "Rechercher par nom ou symbole"
+
+    def get_search_results(self, request: AuthenticatedHttpRequest, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        return queryset, use_distinct

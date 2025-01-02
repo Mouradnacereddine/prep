@@ -361,12 +361,12 @@ class MouvementMaterielAdmin(CustomModelAdmin):
         return readonly
 
 @admin.register(LigneMouvement)
-class LigneMouvementAdmin(admin.ModelAdmin):
+class LigneMouvementAdmin(CustomModelAdmin):
     form = LigneMouvementForm
     list_display = ('mouvement', 'article', 'quantite', 'get_bmm_status')
     list_filter = ('mouvement__statut', 'mouvement__type_mouvement')
     search_fields = ('article__designation', 'mouvement__numero_bmm')
-    autocomplete_fields = ['article']
+    autocomplete_fields = ['article', 'mouvement']
 
     def get_bmm_status(self, obj):
         url = f"/admin/gestion_prep/mouvementmateriel/{obj.mouvement.id}/change/"
@@ -449,8 +449,8 @@ class DocumentAdmin(CustomModelAdmin):
     form = DocumentForm
     list_display = ('get_fichier_display', 'get_parent_display', 'remarque', 'uploaded_by', 'date_upload')
     list_filter = ('date_upload', 'uploaded_by')
-    search_fields = ('fichier', 'remarque')
-    autocomplete_fields = ['article', 'uploaded_by']
+    search_fields = ('fichier', 'remarque', 'article__code_article', 'equipement__tag')
+    autocomplete_fields = ['article', 'equipement', 'uploaded_by']
 
     @admin.display(description='Fichier')
     def get_fichier_display(self, obj):
